@@ -25,6 +25,7 @@ import (
 	"github.com/planetdecred/godcr/ui/page/dexclient"
 	"github.com/planetdecred/godcr/ui/page/governance"
 	"github.com/planetdecred/godcr/ui/page/info"
+	"github.com/planetdecred/godcr/ui/page/more"
 	"github.com/planetdecred/godcr/ui/page/privacy"
 	"github.com/planetdecred/godcr/ui/page/seedbackup"
 	"github.com/planetdecred/godcr/ui/page/send"
@@ -144,7 +145,7 @@ func (mp *MainPage) initNavItems() {
 				Clickable:     mp.Theme.NewClickable(true),
 				Image:         mp.Theme.Icons.OverviewIcon,
 				ImageInactive: mp.Theme.Icons.OverviewIconInactive,
-				Title:         values.String(values.StrInfo),
+				Title:         values.String(values.StrOverview),
 				PageID:        info.InfoID,
 			},
 			{
@@ -193,8 +194,8 @@ func (mp *MainPage) initNavItems() {
 				Clickable:     mp.Theme.NewClickable(true),
 				Image:         mp.Theme.Icons.MoreIcon,
 				ImageInactive: mp.Theme.Icons.MoreIconInactive,
-				Title:         values.String(values.StrSettings),
-				PageID:        WalletSettingsPageID,
+				Title:         values.String(values.StrMore),
+				PageID:        more.MorePageID,
 			},
 		},
 		MinimizeNavDrawerButton: mp.Theme.IconButton(mp.Theme.Icons.NavigationArrowBack),
@@ -209,7 +210,7 @@ func (mp *MainPage) initNavItems() {
 				Clickable:     mp.Theme.NewClickable(true),
 				Image:         mp.Theme.Icons.OverviewIcon,
 				ImageInactive: mp.Theme.Icons.OverviewIconInactive,
-				Title:         values.String(values.StrInfo),
+				Title:         values.String(values.StrOverview),
 				PageID:        info.InfoID,
 			},
 			{
@@ -231,7 +232,7 @@ func (mp *MainPage) initNavItems() {
 				Image:         mp.Theme.Icons.MoreIcon,
 				ImageInactive: mp.Theme.Icons.MoreIconInactive,
 				Title:         values.String(values.StrMore),
-				PageID:        WalletSettingsPageID,
+				PageID:        more.MorePageID,
 			},
 		},
 	}
@@ -499,8 +500,8 @@ func (mp *MainPage) HandleUserInteractions() {
 				pg = governance.NewGovernancePage(mp.Load)
 			case dexclient.MarketPageID:
 				pg = dexclient.NewMarketPage(mp.Load)
-			case WalletSettingsPageID:
-				pg = NewWalletSettingsPage(mp.Load)
+			case more.MorePageID:
+				pg = more.NewMorePage(mp.Load)
 			}
 
 			if pg == nil || mp.ID() == mp.CurrentPageID() {

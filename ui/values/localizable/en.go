@@ -507,4 +507,5 @@ unlockWithPassword = "Unlock with password"
 "confirmUmixedSpending" = "Confirm to allow spending from unmixed accounts"
 "ok" = "OK"
 "accountMixer" = "AccountMixer"
+
 `

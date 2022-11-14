@@ -90,6 +90,7 @@ func NewSettingsPage(l *load.Load) *SettingsPage {
 // may be used to initialize page features that are only relevant when
 // the page is displayed.
 // Part of the load.Page interface.
+
 func (pg *SettingsPage) OnNavigatedTo() {
 	pg.updateSettingOptions()
 }

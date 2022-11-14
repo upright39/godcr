@@ -26,7 +26,7 @@ func verifyMessageInfo(th *decredmaterial.Theme) []layout.Widget {
 	text := values.StringF(values.StrVerifyMessageInfo, `<span style="text-color: gray">`, `<br />`, `</span>`)
 	return []layout.Widget{
 		renderers.RenderHTML(text, th).Layout,
-	}
+	}   
 }
 
 func signMessageInfo(th *decredmaterial.Theme) []layout.Widget {

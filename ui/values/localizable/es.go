@@ -487,4 +487,5 @@ syncCompTime" = "Est. Sync completion time"
 "confirmUmixedSpending" = "Confirm to allow spending from unmixed accounts"
 "ok" = "OK"
 "accountMixer" = "AccountMixer"
+StrMorePageInfo                    = "For more information, please visit the Dedred documentation"
 `

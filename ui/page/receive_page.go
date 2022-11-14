@@ -287,6 +287,7 @@ func (pg *ReceivePage) layoutMobile(gtx layout.Context) layout.Dimensions {
 
 									return pg.Theme.ImageIcon(gtx, *pg.qrImage, 500)
 								}),
+
 								layout.Rigid(func(gtx C) D {
 									if pg.currentAddress != "" {
 										pg.copyAddressButton.Text = pg.currentAddress

@@ -106,8 +106,9 @@ func (ds *DexServerSelector) DexServersLayout(gtx C) D {
 			Background: ds.Theme.Color.Surface,
 			Alignment:  layout.Middle,
 			Shadow:     ds.shadowBox,
-			Margin:     layout.UniformInset(values.MarginPadding5),
-			Border:     decredmaterial.Border{Radius: decredmaterial.Radius(14)},
+
+			Margin: layout.UniformInset(values.MarginPadding5),
+			Border: decredmaterial.Border{Radius: decredmaterial.Radius(14)},
 		}.Layout(gtx,
 			layout.Flexed(1, ds.Theme.Label(values.TextSize16, host).Layout),
 		)
