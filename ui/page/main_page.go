@@ -91,6 +91,7 @@ type MainPage struct {
 
 	setNavExpanded  func()
 	totalBalanceUSD string
+	shadowBox       *decredmaterial.Shadow
 }
 
 func NewMainPage(l *load.Load) *MainPage {
@@ -736,6 +737,98 @@ func (mp *MainPage) totalDCRBalance(gtx C) D {
 	return components.LayoutBalanceWithUnit(gtx, mp.Load, mp.totalBalance.String())
 }
 
+// func (mp *MainPage) LayoutTopBar(gtx C) D {
+// 	return decredmaterial.LinearLayout{
+// 		Width:       decredmaterial.MatchParent,
+// 		Height:      decredmaterial.WrapContent,
+// 		Background:  mp.Theme.Color.Surface,
+// 		Orientation: layout.Vertical,
+// 	}.Layout(gtx,
+// 		layout.Rigid(func(gtx C) D {
+// 			h := values.MarginPadding24
+// 			v := values.MarginPadding8
+// 			return decredmaterial.LinearLayout{
+// 				Width:       decredmaterial.MatchParent,
+// 				Height:      decredmaterial.WrapContent,
+// 				Orientation: layout.Horizontal,
+// 				Alignment:   layout.Middle,
+// 				Padding: layout.Inset{
+// 					Right:  h,
+// 					Left:   values.MarginPadding10,
+// 					Top:    v,
+// 					Bottom: v,
+// 				},
+// 			}.GradientLayout(gtx,
+// 				layout.Rigid(func(gtx C) D {
+// 					return layout.W.Layout(gtx, func(gtx C) D {
+// 						return decredmaterial.LinearLayout{
+// 							Width:       decredmaterial.WrapContent,
+// 							Height:      decredmaterial.WrapContent,
+// 							Orientation: layout.Horizontal,
+// 							Alignment:   layout.Middle,
+// 							Clickable:   mp.openWalletSelector,
+// 						}.Layout(gtx,
+// 							layout.Rigid(func(gtx C) D {
+// 								return layout.Inset{
+// 									Left:  values.MarginPadding12,
+// 									Right: values.MarginPadding24,
+// 								}.Layout(gtx, func(gtx C) D {
+// 									return mp.Theme.Icons.ChevronLeft.LayoutSize(gtx, values.MarginPadding12)
+// 								})
+// 							}),
+// 							layout.Rigid(func(gtx C) D {
+// 								if mp.WL.SelectedWallet.Wallet.IsWatchingOnlyWallet() {
+// 									return mp.Theme.Icons.DcrWatchOnly.Layout24dp(gtx)
+// 								}
+// 								return mp.Theme.Icons.DecredSymbol2.Layout24dp(gtx)
+// 							}),
+// 							layout.Rigid(func(gtx C) D {
+// 								lbl := mp.Theme.H6(mp.WL.SelectedWallet.Wallet.Name)
+// 								lbl.Color = mp.Theme.Color.PageNavText
+// 								return layout.Inset{
+// 									Left: values.MarginPadding10,
+// 								}.Layout(gtx, lbl.Layout)
+// 							}),
+// 						)
+// 					})
+// 				}),
+// 				layout.Rigid(func(gtx C) D {
+// 					gtx.Constraints.Min.X = gtx.Constraints.Max.X
+// 					return layout.E.Layout(gtx, func(gtx C) D {
+// 						return layout.Flex{}.Layout(gtx,
+// 							layout.Rigid(func(gtx C) D {
+// 								icon := mp.Theme.Icons.RevealIcon
+// 								if mp.isBalanceHidden {
+// 									icon = mp.Theme.Icons.ConcealIcon
+// 								}
+// 								return layout.Inset{
+// 									Top:   values.MarginPadding5,
+// 									Right: values.MarginPadding9,
+// 								}.Layout(gtx, func(gtx C) D {
+// 									return mp.hideBalanceButton.Layout(gtx, icon.Layout16dp)
+// 								})
+// 							}),
+// 							layout.Rigid(func(gtx C) D {
+// 								return mp.totalDCRBalance(gtx)
+// 							}),
+// 							layout.Rigid(func(gtx C) D {
+// 								if !mp.isBalanceHidden {
+// 									return mp.LayoutUSDBalance(gtx)
+// 								}
+// 								return D{}
+// 							}),
+// 						)
+// 					})
+// 				}),
+// 			)
+// 		}),
+// 		layout.Rigid(func(gtx C) D {
+// 			gtx.Constraints.Min.X = gtx.Constraints.Max.X
+// 			return mp.Theme.Separator().Layout(gtx)
+// 		}),
+// 	)
+// }
+
 func (mp *MainPage) LayoutTopBar(gtx C) D {
 	return decredmaterial.LinearLayout{
 		Width:       decredmaterial.MatchParent,
@@ -753,7 +846,7 @@ func (mp *MainPage) LayoutTopBar(gtx C) D {
 				Alignment:   layout.Middle,
 				Padding: layout.Inset{
 					Right:  h,
-					Left:   values.MarginPadding10,
+					Left:   values.MarginPadding8,
 					Top:    v,
 					Bottom: v,
 				},
@@ -766,23 +859,36 @@ func (mp *MainPage) LayoutTopBar(gtx C) D {
 							Orientation: layout.Horizontal,
 							Alignment:   layout.Middle,
 							Clickable:   mp.openWalletSelector,
+							//Shadow:      mp.shadowBox,
+							// Shadow: &decredmaterial.Shadow{
+							// 	surface: mp.Theme.Color.Gray3,
+							// 	shadowEevation: 6,
+							// 	shadowRadius: 7,
+							// },
+
+							Border: decredmaterial.Border{
+								Radius: decredmaterial.Radius(8),
+								Width:  values.MarginPadding4,
+								Color:  mp.Theme.Color.Gray3,
+							},
+							Background: mp.Theme.Color.Turquoise100,
+							Padding: layout.Inset{
+								Top:    values.MarginPadding6,
+								Left:   values.MarginPadding14,
+								Bottom: values.MarginPadding6,
+								Right:  values.MarginPadding30,
+							},
 						}.Layout(gtx,
+
 							layout.Rigid(func(gtx C) D {
-								return layout.Inset{
-									Left:  values.MarginPadding12,
-									Right: values.MarginPadding24,
-								}.Layout(gtx, func(gtx C) D {
-									return mp.Theme.Icons.ChevronLeft.LayoutSize(gtx, values.MarginPadding12)
-								})
+								// if mp.WL.SelectedWallet.Wallet.IsWatchingOnlyWallet() {
+								// 	return mp.Theme.Icons.DecredLogo.Layout24dp(gtx)
+								// }
+								return mp.Theme.Icons.WalletIcon.Layout24dp(gtx)
 							}),
+
 							layout.Rigid(func(gtx C) D {
-								if mp.WL.SelectedWallet.Wallet.IsWatchingOnlyWallet() {
-									return mp.Theme.Icons.DcrWatchOnly.Layout24dp(gtx)
-								}
-								return mp.Theme.Icons.DecredSymbol2.Layout24dp(gtx)
-							}),
-							layout.Rigid(func(gtx C) D {
-								lbl := mp.Theme.H6(mp.WL.SelectedWallet.Wallet.Name)
+								lbl := mp.Theme.H6(mp.WL.SelectedWallet.Wallet.Name + "-1")
 								lbl.Color = mp.Theme.Color.PageNavText
 								return layout.Inset{
 									Left: values.MarginPadding10,
@@ -792,29 +898,53 @@ func (mp *MainPage) LayoutTopBar(gtx C) D {
 					})
 				}),
 				layout.Rigid(func(gtx C) D {
+
+					return layout.Flex{}.Layout(gtx,
+
+						layout.Rigid(func(gtx C) D {
+							return layout.Inset{
+								Top:   values.MarginPadding5,
+								Right: values.MarginPadding9,
+								Left:  values.MarginPadding14,
+							}.Layout(gtx, func(gtx C) D {
+								return mp.Theme.Icons.DecredSymbol2.Layout24dp(gtx)
+							})
+						}),
+						layout.Rigid(func(gtx C) D {
+							return mp.totalDCRBalance(gtx)
+						}),
+					)
+				}),
+
+				layout.Rigid(func(gtx C) D {
 					gtx.Constraints.Min.X = gtx.Constraints.Max.X
 					return layout.E.Layout(gtx, func(gtx C) D {
 						return layout.Flex{}.Layout(gtx,
 							layout.Rigid(func(gtx C) D {
-								icon := mp.Theme.Icons.RevealIcon
-								if mp.isBalanceHidden {
-									icon = mp.Theme.Icons.ConcealIcon
-								}
 								return layout.Inset{
-									Top:   values.MarginPadding5,
-									Right: values.MarginPadding9,
+									Left:  values.MarginPadding12,
+									Right: values.MarginPadding12,
 								}.Layout(gtx, func(gtx C) D {
-									return mp.hideBalanceButton.Layout(gtx, icon.Layout16dp)
+									return mp.Theme.Icons.DexIcon.Layout24dp(gtx)
+
+								})
+							}),
+
+							layout.Rigid(func(gtx C) D {
+								return layout.Inset{
+									Left:  values.MarginPadding12,
+									Right: values.MarginPadding12,
+								}.Layout(gtx, func(gtx C) D {
+									return mp.Theme.Icons.SettingsIcon.Layout24dp(gtx)
 								})
 							}),
 							layout.Rigid(func(gtx C) D {
-								return mp.totalDCRBalance(gtx)
-							}),
-							layout.Rigid(func(gtx C) D {
-								if !mp.isBalanceHidden {
-									return mp.LayoutUSDBalance(gtx)
-								}
-								return D{}
+								return layout.Inset{
+									Left:  values.MarginPadding12,
+									Right: values.MarginPadding12,
+								}.Layout(gtx, func(gtx C) D {
+									return mp.Theme.Icons.DarkmodeIcon.Layout24dp(gtx)
+								})
 							}),
 						)
 					})
